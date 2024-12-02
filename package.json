@@ -1,0 +1,19 @@
+{
+  "name": "mangement-payement-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "mongoose": "^8.8.3",
+    "node": "^20.18.1",
+    "nodemon": "^3.1.7"
+  }
+}
