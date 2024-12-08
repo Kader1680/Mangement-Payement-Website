@@ -3,6 +3,7 @@ var http = require("http")
 const express = require("express")
 const app = express()
 
+const { connectToDatabase } = require("./model/db");
 // app.get('/login', (req, res)=>{
 //     res.send("hellow from the login page")
 // })
@@ -24,8 +25,28 @@ app.get("/register", function(req, res){
 }) 
 
 
-app.get("/", function(req, res){
-    res.render("pages/home")
+// database side
+
+const database =  require("./model/db")
+
+
+app.get("/", async function(req, res){
+    // res.render("pages/home")
+
+
+    try {
+        const db = await connectToDatabase();
+        const collection = db.collection("PaymentCollect");
+        const payment = await collection.findOne({});
+        // res.json(payment); // Send the fetched data as a response
+
+        console.log(payment)
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        res.status(500).send("Internal Server Error");
+      }
+
+
 }) 
 http.createServer(function(req, res){
 

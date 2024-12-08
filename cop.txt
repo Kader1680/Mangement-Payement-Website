@@ -1,0 +1,9 @@
+Water & Electricity
+Food
+Transportation
+Education
+Entertainment
+Subscriptions
+
+
+mongodb+srv://test:test@payment-project.tqr1g.mongodb.net/?retryWrites=true&w=majority&appName=Payment-project
