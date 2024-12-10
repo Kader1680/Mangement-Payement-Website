@@ -33,60 +33,59 @@
       <h2 class="text-2xl font-semibold text-gray-800 mb-4">Select Options</h2>
       <ul class="space-y-4">
         <li class="flex items-center">
-          <input type="checkbox" id="option1" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded">
+          <input type="checkbox" id="option1" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded" data-salary="20">
           <label for="option1" class="text-gray-700">Water & Electricity</label>
         </li>
         <li class="flex items-center">
-          <input type="checkbox" id="option2" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded">
+          <input type="checkbox" id="option2" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded" data-salary="15">
           <label for="option2" class="text-gray-700">Food</label>
         </li>
         <li class="flex items-center">
-          <input type="checkbox" id="option3" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded">
+          <input type="checkbox" id="option3" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded" data-salary="10">
           <label for="option3" class="text-gray-700">Transportation</label>
         </li>
         <li class="flex items-center">
-          <input type="checkbox" id="option4" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded">
+          <input type="checkbox" id="option4" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded" data-salary="25">
           <label for="option4" class="text-gray-700">Education</label>
         </li>
         <li class="flex items-center">
-          <input type="checkbox" id="option5" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded">
+          <input type="checkbox" id="option5" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded" data-salary="10">
           <label for="option5" class="text-gray-700">Entertainment</label>
         </li>
         <li class="flex items-center">
-          <input type="checkbox" id="option6" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded">
+          <input type="checkbox" id="option6" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded" data-salary="5">
           <label for="option6" class="text-gray-700">Subscriptions</label>
         </li>
         <li class="flex items-center">
-          <input type="checkbox" id="option7" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded">
+          <input type="checkbox" id="option7" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded" data-salary="8">
           <label for="option7" class="text-gray-700">Saving</label>
         </li>
       </ul>
     </aside>
 
-    <!-- Balance Display & Form -->
     <div class="flex-1">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
         <!-- Current Balance -->
         <div class="bg-white shadow-lg rounded-lg p-6 text-center">
           <h2 class="text-xl font-semibold text-gray-800">Current Balance</h2>
-          <p class="text-5xl font-bold text-green-600 mt-4">$1,234.56</p>
+          <p class="text-5xl font-bold text-green-600 mt-4" id="currentBalance">100 $</p>
         </div>
         <!-- Balance after Management -->
         <div class="bg-white shadow-lg rounded-lg p-6 text-center">
           <h2 class="text-xl font-semibold text-gray-800">Balance after Management</h2>
-          <p class="text-5xl font-bold text-green-600 mt-4">$12</p>
+          <p class="text-5xl font-bold text-green-600 mt-4" id="updatedBalance">12 $</p>
         </div>
       </div>
 
       <!-- Add Current Amount Form -->
       <div class="bg-white shadow-lg rounded-lg p-6">
         <h2 class="text-xl font-semibold text-gray-800 mb-4">Add Current Amount or Salary</h2>
-        <form>
+        <form method="post" action="/">
           <div class="mb-6">
             <label for="amount" class="block text-gray-600 mb-2">Enter Amount:</label>
-            <input type="number" id="amount" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400" placeholder="Enter amount">
+            <input type="number" name="amount" id="amount" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400" placeholder="Enter amount" required>
           </div>
-          <button type="submit" class="w-full py-2 bg-[#6C8CA0]  text-white font-semibold rounded-lg hover:bg-red-600 transition">
+          <button type="submit" class="w-full py-2 bg-[#6C8CA0] text-white font-semibold rounded-lg hover:bg-red-600 transition">
             Submit
           </button>
         </form>
@@ -99,13 +98,31 @@
     <p class="text-sm">&copy; 2024 Brand. All rights reserved.</p>
   </footer>
 
-  <!-- JavaScript for Mobile Menu -->
+  <!-- JavaScript for Mobile Menu and Salary Calculation -->
   <script>
-    const menuToggle = document.getElementById('menuToggle');
-    menuToggle?.addEventListener('click', function() {
-      const mobileMenu = document.getElementById('mobileMenu');
-      mobileMenu?.classList.toggle('hidden');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const updatedBalance = document.getElementById('updatedBalance');
+    const currentBalance = document.getElementById('currentBalance');
+    let baseSalary = 100;  // Example base salary
+
+    // Function to update balance based on selected checkboxes
+    function updateBalance() {
+      let totalSalary = baseSalary;
+      checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+          totalSalary += parseInt(checkbox.getAttribute('data-salary'));
+        }
+      });
+      updatedBalance.textContent = `${totalSalary} $`;
+    }
+
+    // Event listener for checkbox change
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', updateBalance);
     });
+
+    // Initialize with the correct balance
+    updateBalance();
   </script>
 </body>
 </html>

@@ -1,25 +1,14 @@
+const mongoose = require('mongoose')
 
+const blogShcema = new mongoose.Schema({
 
-const {MongoClient} = require("mongodb")
-const url = "mongodb+srv://test:test@payment-project.tqr1g.mongodb.net/?retryWrites=true&w=majority&appName=Payment-project"
-const dbName = "PaymentDB"
+    salary : {
+        type : String, 
+        required: true
+    } 
+})
 
+// create model  ====> name of collection
+const Blog = mongoose.model('PaymentCollect', blogShcema)
 
-
-let dbInstance; // Store the database connection
-
-const connectToDatabase = async () => {
-  if (!dbInstance) {
-    try {
-      const client = await MongoClient.connect(url);
-      console.log("Connected to MongoDB");
-      dbInstance = client.db(dbName);
-    } catch (err) {
-      console.error("Error connecting to MongoDB:", err);
-      throw err;
-    }
-  }
-  return dbInstance;
-};
-
-module.exports = { connectToDatabase };
+module.exports = Blog
