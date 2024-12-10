@@ -26,7 +26,6 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
   <div class="max-w-screen-xl mx-auto p-8 flex flex-col lg:flex-row gap-6">
     <!-- Sidebar -->
     <aside class="w-full lg:w-1/4 bg-white shadow-lg rounded-lg p-6">
@@ -110,7 +109,7 @@
       let totalSalary = baseSalary;
       checkboxes.forEach(checkbox => {
         if (checkbox.checked) {
-          totalSalary += parseInt(checkbox.getAttribute('data-salary'));
+          totalSalary -= parseInt(checkbox.getAttribute('data-salary'));
         }
       });
       updatedBalance.textContent = `${totalSalary} $`;
