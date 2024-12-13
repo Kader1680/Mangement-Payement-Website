@@ -14,9 +14,7 @@
       <a href="#" class="text-white text-2xl font-bold">Brand</a>
       <div class="hidden md:flex space-x-6">
         <a href="#" class="text-white text-lg hover:text-red-300 transition">Home</a>
-        <a href="#" class="text-white text-lg hover:text-red-300 transition">About</a>
-        <a href="#" class="text-white text-lg hover:text-red-300 transition">Services</a>
-        <a href="#" class="text-white text-lg hover:text-red-300 transition">Contact</a>
+        <a href="/logout" class="text-white text-lg hover:text-red-300 transition">Logout</a>
       </div>
       <button id="menuToggle" class="md:hidden text-white">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
@@ -67,7 +65,11 @@
         <!-- Current Balance -->
         <div class="bg-white shadow-lg rounded-lg p-6 text-center">
           <h2 class="text-xl font-semibold text-gray-800">Current Balance</h2>
-          <p class="text-5xl font-bold text-green-600 mt-4" id="currentBalance">100 $</p>
+          
+            <% items.forEach(item => { %>
+              <p class="text-5xl font-bold text-green-600 mt-4"><%= item.salary %> $</p>
+            <% }); %>
+        
         </div>
         <!-- Balance after Management -->
         <div class="bg-white shadow-lg rounded-lg p-6 text-center">
@@ -76,19 +78,66 @@
         </div>
       </div>
 
-      <!-- Add Current Amount Form -->
       <div class="bg-white shadow-lg rounded-lg p-6">
         <h2 class="text-xl font-semibold text-gray-800 mb-4">Add Current Amount or Salary</h2>
         <form method="post" action="/">
           <div class="mb-6">
             <label for="amount" class="block text-gray-600 mb-2">Enter Amount:</label>
-            <input type="number" name="amount" id="amount" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400" placeholder="Enter amount" required>
+            <input
+              type="number"
+              name="amount"
+              id="amount"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+              placeholder="Enter amount"
+              required
+            />
           </div>
-          <button type="submit" class="w-full py-2 bg-[#6C8CA0] text-white font-semibold rounded-lg hover:bg-red-600 transition">
+          <div class="mb-6">
+            <label for="source" class="block text-gray-600 mb-2">Select Source of Income:</label>
+            <select
+              name="source"
+              id="source"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+              required
+            >
+              <option value="">-- Select Source --</option>
+              <option value="Job">Job</option>
+              <option value="Freelancer">Freelancer</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <button
+            type="submit"
+            class="w-full py-2 bg-[#6C8CA0] text-white font-semibold rounded-lg hover:bg-red-600 transition"
+          >
             Submit
           </button>
         </form>
       </div>
+
+      <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Income Sources</h2>
+        <div class="space-y-4">
+          <% items.forEach(item => { %>
+            <div class="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-sm">
+              <div class="flex items-center space-x-4">
+                <!-- Income Source Icon (You can replace it with a custom icon) -->
+                <div class="w-8 h-8 bg-blue-500 rounded-full text-white flex items-center justify-center">
+                  <span class="text-lg font-semibold"><%= item.source.charAt(0) %></span>
+                </div>
+                <div>
+                  <p class="text-lg font-semibold text-gray-800"><%= item.salary %> $</p>
+                  <p class="text-sm text-gray-600"><%= item.source %></p>
+                </div>
+              </div>
+             
+              <button class="text-red-500 hover:text-red-700 font-semibold">Delete</button>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+      
+       
     </div>
   </div>
 
