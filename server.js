@@ -7,26 +7,25 @@ const uri = "mongodb://localhost:27017";
 const client = new MongoClient(uri);
 
 app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
-app.use(express.json()); // Parse JSON data
+app.use(express.urlencoded({ extended: true })); 
+app.use(express.json()); 
 
 
 
-// Configure session
 app.use(
   session({
-    secret: "your-secret-key",
+    secret: "secret",
     resave: false,
     saveUninitialized: false,
   })
 );
 
-// Route: Registration Page
+
 app.get("/register", (req, res) => {
   res.render("pages/register");
 });
 
-// Route: Handle Registration
+
 app.post("/register", async (req, res) => {
   try {
     await client.connect();
@@ -44,12 +43,10 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// Route: Login Page
 app.get("/login", (req, res) => {
   res.render("pages/login");
 });
 
-// Route: Handle Login
 app.post("/login", async (req, res) => {
   try {
     await client.connect();
@@ -71,7 +68,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Middleware: Check Authentication
 function checkAuth(req, res, next) {
   if (!req.session.user) {
     return res.redirect("/login");
@@ -79,7 +75,6 @@ function checkAuth(req, res, next) {
   next();
 }
 
-// Protected Route: Home
 app.all("/", checkAuth, async (req, res) => {
   try {
     await client.connect();
@@ -88,7 +83,6 @@ app.all("/", checkAuth, async (req, res) => {
 
     const { amount, source } = req.body;
       if (amount && source) {
-        // Insert the submitted amount and source into the database
         await collection.insertOne({
           salary: parseInt(amount, 10),
           source: source,
@@ -106,7 +100,6 @@ app.all("/", checkAuth, async (req, res) => {
   }
 });
 
-// Logout Route
 app.get("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/login");
