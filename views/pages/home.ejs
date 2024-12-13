@@ -25,56 +25,51 @@
   </nav>
 
   <div class="max-w-screen-xl mx-auto p-8 flex flex-col lg:flex-row gap-6">
-    <!-- Sidebar -->
+    <!-- Sidebar (Move Salary Management Form to Left) -->
     <aside class="w-full lg:w-1/4 bg-white shadow-lg rounded-lg p-6">
-      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Select Options</h2>
-      <ul class="space-y-4">
-        <li class="flex items-center">
-          <input type="checkbox" id="option1" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded" data-salary="20">
-          <label for="option1" class="text-gray-700">Water & Electricity</label>
-        </li>
-        <li class="flex items-center">
-          <input type="checkbox" id="option2" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded" data-salary="15">
-          <label for="option2" class="text-gray-700">Food</label>
-        </li>
-        <li class="flex items-center">
-          <input type="checkbox" id="option3" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded" data-salary="10">
-          <label for="option3" class="text-gray-700">Transportation</label>
-        </li>
-        <li class="flex items-center">
-          <input type="checkbox" id="option4" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded" data-salary="25">
-          <label for="option4" class="text-gray-700">Education</label>
-        </li>
-        <li class="flex items-center">
-          <input type="checkbox" id="option5" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded" data-salary="10">
-          <label for="option5" class="text-gray-700">Entertainment</label>
-        </li>
-        <li class="flex items-center">
-          <input type="checkbox" id="option6" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded" data-salary="5">
-          <label for="option6" class="text-gray-700">Subscriptions</label>
-        </li>
-        <li class="flex items-center">
-          <input type="checkbox" id="option7" class="mr-3 h-5 w-5 text-red-500 focus:ring-red-400 border-gray-300 rounded" data-salary="8">
-          <label for="option7" class="text-gray-700">Saving</label>
-        </li>
-      </ul>
+      <!-- Salary Management Form -->
+      <div class="bg-white shadow-lg rounded-lg p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Manage Salary Expenses</h2>
+        <form id="expenseForm">
+          <div class="mb-4">
+            <label for="water" class="block text-gray-600 mb-2">Water:</label>
+            <input type="number" id="water" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Enter water expense" />
+          </div>
+          <div class="mb-4">
+            <label for="electricity" class="block text-gray-600 mb-2">Electricity:</label>
+            <input type="number" id="electricity" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Enter electricity expense" />
+          </div>
+          <div class="mb-4">
+            <label for="education" class="block text-gray-600 mb-2">Education:</label>
+            <input type="number" id="education" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Enter education expense" />
+          </div>
+          <div class="mb-4">
+            <label for="gym" class="block text-gray-600 mb-2">Gym Subscription:</label>
+            <input type="number" id="gym" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Enter gym expense" />
+          </div>
+          <button type="submit" class="w-full py-2 bg-[#6C8CA0] text-white font-semibold rounded-lg hover:bg-red-600 transition">
+            Update Balance
+          </button>
+        </form>
+      </div>
     </aside>
 
+    <!-- Main Content -->
     <div class="flex-1">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
         <!-- Current Balance -->
         <div class="bg-white shadow-lg rounded-lg p-6 text-center">
           <h2 class="text-xl font-semibold text-gray-800">Current Balance</h2>
-          
-            <% items.forEach(item => { %>
-              <p class="text-5xl font-bold text-green-600 mt-4"><%= item.salary %> $</p>
-            <% }); %>
-        
+          <% items.forEach(item => { %>
+            <p class="text-5xl font-bold text-green-600 mt-4"><%= item.salary %> $</p>
+          <% }); %>
         </div>
-        <!-- Balance after Management -->
+        
         <div class="bg-white shadow-lg rounded-lg p-6 text-center">
           <h2 class="text-xl font-semibold text-gray-800">Balance after Management</h2>
-          <p class="text-5xl font-bold text-green-600 mt-4" id="updatedBalance">12 $</p>
+          <% items.forEach(item => { %>
+            <p class="text-5xl font-bold text-green-600 mt-4" id="updatedBalance"><%= item.salary %> $</p>
+          <% }); %>
         </div>
       </div>
 
@@ -100,7 +95,7 @@
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               required
             >
-              <option value="">-- Select Source --</option>
+              <option value="">Select Source of Your Money</option>
               <option value="Job">Job</option>
               <option value="Freelancer">Freelancer</option>
               <option value="Other">Other</option>
@@ -121,7 +116,6 @@
           <% items.forEach(item => { %>
             <div class="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-sm">
               <div class="flex items-center space-x-4">
-                <!-- Income Source Icon (You can replace it with a custom icon) -->
                 <div class="w-8 h-8 bg-blue-500 rounded-full text-white flex items-center justify-center">
                   <span class="text-lg font-semibold"><%= item.source.charAt(0) %></span>
                 </div>
@@ -136,41 +130,31 @@
           <% }); %>
         </div>
       </div>
-      
-       
     </div>
   </div>
 
-  <!-- Footer -->
   <footer class="bg-[#6C8CA0] text-white text-center py-4">
     <p class="text-sm">&copy; 2024 Brand. All rights reserved.</p>
   </footer>
 
-  <!-- JavaScript for Mobile Menu and Salary Calculation -->
   <script>
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    const updatedBalance = document.getElementById('updatedBalance');
-    const currentBalance = document.getElementById('currentBalance');
-    let baseSalary = 100;  // Example base salary
+    const form = document.getElementById('expenseForm');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      
+      const salary = parseFloat('<%= items[0].salary %>');
+      const water = parseFloat(document.getElementById('water').value) || 0;
+      const electricity = parseFloat(document.getElementById('electricity').value) || 0;
+      const education = parseFloat(document.getElementById('education').value) || 0;
+      const gym = parseFloat(document.getElementById('gym').value) || 0;
 
-    // Function to update balance based on selected checkboxes
-    function updateBalance() {
-      let totalSalary = baseSalary;
-      checkboxes.forEach(checkbox => {
-        if (checkbox.checked) {
-          totalSalary -= parseInt(checkbox.getAttribute('data-salary'));
-        }
-      });
-      updatedBalance.textContent = `${totalSalary} $`;
-    }
+      const totalExpense = water + electricity + education + gym;
 
-    // Event listener for checkbox change
-    checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', updateBalance);
+      const updatedBalance = salary - totalExpense;
+
+      document.getElementById('updatedBalance').textContent = updatedBalance + ' $';
     });
-
-    // Initialize with the correct balance
-    updateBalance();
   </script>
+  
 </body>
 </html>
